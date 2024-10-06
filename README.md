@@ -17,7 +17,7 @@ This project applies various filters to a webcam feed using Python and Flask.
 - Sobel filter with adjustable kernel size
 
 ### Video
-[![Video](https://img.youtube.com/vi/AJrWA2AoDhU/maxresdefault.jpg)](https://youtu.be/AJrWA2AoDhU)
+https://github.com/user-attachments/assets/7971fb5e-eca2-4373-b257-77fc56e1d810
 
 ### Grayscale Filter
 ![Grayscale Filter](images/Grayscale%20Filter.png)
