@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcam Filter</title>
+    <script>
+        function setFilter(filter) {
+            document.getElementById('video').src = '/video_feed?filter=' + filter;
+        }
+    </script>
 </head>
 <body>
-    <h1>Webcam Filter Application</h1>
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <h1>Webcam Filter</h1>
+    <div>
+        <button onclick="setFilter('none')">Original</button>
+        <button onclick="setFilter('gray')">Grayscale</button>
+        <button onclick="setFilter('canny')">Canny Edge</button>
+    </div>
+    <img id="video" src="/video_feed?filter=none" width="640" height="480">
 </body>
 </html>
