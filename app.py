@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 camera = cv2.VideoCapture(0)
 
-def generate_frames(filter_type):
+def generate_frames(filter_type=None):
     while True:
         success, frame = camera.read()
         if not success:
@@ -30,6 +30,10 @@ def index():
 def video_feed():
     filter_type = request.args.get('filter', 'none')
     return Response(generate_frames(filter_type), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/original_feed')
+def original_feed():
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True)
