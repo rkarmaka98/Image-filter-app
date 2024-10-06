@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcam Filter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function setFilter(filter) {
             document.getElementById('filtered_video').src = '/video_feed?filter=' + filter;
@@ -12,21 +13,23 @@
 </head>
 <body>
     <h1>Webcam Filter</h1>
-    <div>
-        <button onclick="setFilter('none')">Original</button>
-        <button onclick="setFilter('gray')">Grayscale</button>
-        <button onclick="setFilter('canny')">Canny Edge</button>
-    </div>
-    <div style="display: flex;">
-        <div>
+    <div class="video-container">
+        <div class="video-box">
             <h2>Original</h2>
             <img id="original_video" src="/original_feed" width="640" height="480">
         </div>
-        <div>
+        <div class="video-box">
             <h2>Filtered</h2>
             <img id="filtered_video" src="/video_feed?filter=none" width="640" height="480">
         </div>
     </div>
-    
+    <div class="button-container">
+        <!-- <button onclick="setFilter('none')">Original</button> -->
+        <button onclick="setFilter('gray')">Grayscale</button>
+        <button onclick="setFilter('canny')">Canny Edge</button>
+        <button onclick="setFilter('gaussian')">Gaussian Blur</button>
+        <button onclick="setFilter('laplacian')">Laplacian</button>
+        <button onclick="setFilter('sobel')">Sobel</button>
+    </div>
 </body>
 </html>

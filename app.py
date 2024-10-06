@@ -16,7 +16,15 @@ def generate_frames(filter_type=None):
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             elif filter_type == 'canny':
                 frame = cv2.Canny(frame, 100, 200)
-            
+            elif filter_type == 'gaussian':
+                frame = cv2.GaussianBlur(frame, (15, 15), 0)
+            elif filter_type == 'laplacian':
+                frame = cv2.Laplacian(frame, cv2.CV_64F)
+                frame = cv2.convertScaleAbs(frame)
+            elif filter_type == 'sobel':
+                frame = cv2.Sobel(frame, cv2.CV_64F, 1, 0, ksize=5)
+                frame = cv2.convertScaleAbs(frame)
+                
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
