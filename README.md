@@ -4,3 +4,9 @@
 
 **Windows**
 - Double-click the `setup_env.bat` file or run it from the command line
+
+- Glayscale
+- Canny
+- Gaussian Blue
+- Laplacian
+- Sobel
