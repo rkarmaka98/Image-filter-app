@@ -7,8 +7,84 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function setFilter(filter) {
-            document.getElementById('filtered_video').src = '/video_feed?filter=' + filter;
+            document.querySelectorAll('.button-container button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`button[data-filter="${filter}"]`).classList.add('active');
+            updateSliderRanges(filter);
+            updateFilter();
         }
+
+        function updateSliderRanges(filter) {
+            const param1 = document.getElementById('param1');
+            const param2 = document.getElementById('param2');
+            if (filter === 'canny') {
+                param1.min = 0;
+                param1.max = 255;
+                param1.value = 100;
+                param2.min = 0;
+                param2.max = 255;
+                param2.value = 200;
+            } else if (filter === 'gaussian') {
+                param1.min = 1;
+                param1.max = 31;
+                param1.value = 15;
+                param2.min = 0;
+                param2.max = 0;
+                param2.value = 0;
+                param2.disabled = true;
+            } else if (filter === 'sobel') {
+                param1.min = 1;
+                param1.max = 31;
+                param1.value = 5;
+                param2.min = 0;
+                param2.max = 0;
+                param2.value = 0;
+                param2.disabled = true;
+            } else if (filter === 'laplacian') {
+                param1.min = 1;
+                param1.max = 100;
+                param1.value = 10;
+                param2.min = 0;
+                param2.max = 0;
+                param2.value = 0;
+                param2.disabled = true;
+            } else if (filter === 'gray') {
+                param1.min = 0;
+                param1.max = 100;
+                param1.value = 50;
+                param2.min = 0;
+                param2.max = 0;
+                param2.value = 0;
+                param2.disabled = true;
+            } else {
+                param1.min = 0;
+                param1.max = 100;
+                param1.value = 0;
+                param2.min = 0;
+                param2.max = 100;
+                param2.value = 0;
+                param2.disabled = false;
+            }
+        }
+
+        function updateFilter() {
+            const filter = document.querySelector('.button-container button.active').getAttribute('data-filter');
+            const param1 = document.getElementById('param1').value;
+            const param2 = document.getElementById('param2').value;
+            document.getElementById('filtered_video').src = `/video_feed?filter=${filter}&param1=${param1}&param2=${param2}`;
+        }
+
+        document.querySelectorAll('.button-container button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.button-container button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                setFilter(this.getAttribute('data-filter'));
+            });
+        });
+        
+        // Initialize the filter to 'none' on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setFilter('none');
+        });
     </script>
 </head>
 <body>
@@ -24,12 +100,18 @@
         </div>
     </div>
     <div class="button-container">
-        <!-- <button onclick="setFilter('none')">Original</button> -->
-        <button onclick="setFilter('gray')">Grayscale</button>
-        <button onclick="setFilter('canny')">Canny Edge</button>
-        <button onclick="setFilter('gaussian')">Gaussian Blur</button>
-        <button onclick="setFilter('laplacian')">Laplacian</button>
-        <button onclick="setFilter('sobel')">Sobel</button>
+        <button data-filter="none" onclick="setFilter('none')">Original</button>
+        <button data-filter="gray" onclick="setFilter('gray')">Grayscale</button>
+        <button data-filter="canny" onclick="setFilter('canny')">Canny Edge</button>
+        <button data-filter="gaussian" onclick="setFilter('gaussian')">Gaussian Blur</button>
+        <button data-filter="laplacian" onclick="setFilter('laplacian')">Laplacian</button>
+        <button data-filter="sobel" onclick="setFilter('sobel')">Sobel</button>
+    </div>
+    <div class="slider-container">
+        <label for="param1">Parameter 1:</label>
+        <input type="range" id="param1" name="param1" min="0" max="100" value="0" oninput="updateFilter()">
+        <label for="param2">Parameter 2:</label>
+        <input type="range" id="param2" name="param2" min="0" max="100" value="0" oninput="updateFilter()">
     </div>
 </body>
 </html>
