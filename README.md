@@ -4,6 +4,7 @@ The Image Filter App is a web application that allows users to upload an image a
 
 ### Video
 https://github.com/user-attachments/assets/7971fb5e-eca2-4373-b257-77fc56e1d810
+<img width="1703" height="912" alt="image" src="https://github.com/user-attachments/assets/dc62cb82-c3d9-491d-8f2b-43eb89dd1ea7" />
 
 ## Table of Contents
 
